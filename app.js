@@ -17,7 +17,7 @@ const db = firebase.firestore();
 document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
-  if (path === "/index.html") {
+  if (path === "/workshop-blog/index.html") {
     loadHomePage();
   } else if (path === "/create.html") {
     loadCreatePage();
@@ -124,7 +124,7 @@ function loadShowPage() {
   const id = urlParams.get("id");
 
   if (!id) {
-    window.location.href = "/"; // Redirect if no ID is provided
+    window.location.href = "/index.html"; // Redirect if no ID is provided
     return;
   }
 
