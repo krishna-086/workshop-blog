@@ -17,7 +17,7 @@ const db = firebase.firestore();
 document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
-  if (path === "/" || path === "/index.html") {
+  if (path === "/index.html") {
     loadHomePage();
   } else if (path === "/create.html") {
     loadCreatePage();
@@ -114,7 +114,7 @@ function loadCreatePage() {
       author,
     });
 
-    window.location.href = "/";
+    window.location.href = "/index.html";
   });
 }
 
@@ -199,7 +199,7 @@ function loadShowPage() {
     // Handle delete button click
     document.getElementById("delete-btn").addEventListener("click", async () => {
       await db.collection("blogs").doc(id).delete();
-      window.location.href = "/";
+      window.location.href = "/index.html";
     });
   };
 
