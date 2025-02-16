@@ -1,36 +1,42 @@
-// Firebase configuration (replace with your own config)
-const firebaseConfig = {
-  apiKey: "AIzaSyC8yZewXbzpgr2cG46yuZQFFfIjiGCNhPw",
-  authDomain: "blog-50ae5.firebaseapp.com",
-  projectId: "blog-50ae5",
-  storageBucket: "blog-50ae5.firebasestorage.app",
-  messagingSenderId: "198332093215",
-  appId: "1:198332093215:web:d20a5710c26c8e4321162a",
-  measurementId: "G-D1ZHDVJT2G"
-};
+import firebaseConfig from "./firebaseConfig.js";
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// Determine if we're on GitHub Pages by checking if the pathname includes the repo name
+const basePath = window.location.pathname.includes("/workshop-blog")
+  ? "/workshop-blog"
+  : "";
+
 // Load the appropriate functionality based on the page
 document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
-//   if (path === "/workshop-blog/index.html" || path === "/workshop-blog/") {
-//     loadHomePage();
-//   } else if (path === "/workshop-blog/create.html") {
-//     loadCreatePage();
-//   } else if (path === "/workshop-blog/show.html") {
-//     loadShowPage();
-//   }
-// });
+  //   if (path === "/workshop-blog/index.html" || path === "/workshop-blog/") {
+  //     loadHomePage();
+  //   } else if (path === "/workshop-blog/create.html") {
+  //     loadCreatePage();
+  //   } else if (path === "/workshop-blog/show.html") {
+  //     loadShowPage();
+  //   }
+  // });
 
-  if (path === "/index.html" || path === "/") {
+  // if (path === "/index.html" || path === "/") {
+  //   loadHomePage();
+  // } else if (path === "/create.html") {
+  //   loadCreatePage();
+  // } else if (path === "/show.html") {
+  //   loadShowPage();
+  // }
+  if (path === `${basePath}/index.html` || path === `${basePath}/`) {
     loadHomePage();
-  } else if (path === "/create.html") {
+    console.log("You're on the home page");
+  }
+  if (path === `${basePath}/create.html`) {
     loadCreatePage();
-  } else if (path === "/show.html") {
+  }
+  if (path === `${basePath}/show.html`) {
     loadShowPage();
   }
 });
@@ -70,7 +76,8 @@ function loadHomePage() {
         // blogList.appendChild(blogPreview);
         const blogLink = document.createElement("a");
         // blogLink.href = `/workshop-blog/show.html?id=${doc.id}`;
-        blogLink.href = `/show.html?id=${doc.id}`; // Update: Link to the blog's details page
+        // blogLink.href = `/show.html?id=${doc.id}`; // Update: Link to the blog's details page
+        blogLink.href = `${basePath}/show.html?id=${doc.id}`;
         blogLink.style.textDecoration = "none"; // Update: Remove underline from the link
         blogLink.style.color = "inherit"; // Update: Inherit text color
 
@@ -124,7 +131,8 @@ function loadCreatePage() {
       author,
     });
 
-    window.location.href = "/index.html";
+    // window.location.href = "/index.html";
+    window.location.href = `${basePath}/index.html`; 
   });
 }
 
@@ -134,7 +142,7 @@ function loadShowPage() {
   const id = urlParams.get("id");
 
   if (!id) {
-    window.location.href = "/index.html"; // Redirect if no ID is provided
+    window.location.href = `${basePath}/index.html`;  // Redirect if no ID is provided
     return;
   }
 
@@ -191,26 +199,30 @@ function loadShowPage() {
     });
 
     // Handle edit form submission
-    document.getElementById("edit-blog-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const title = document.getElementById("edit-title").value;
-      const body = document.getElementById("edit-body").value;
-      // const author = document.getElementById("edit-author").value;
+    document
+      .getElementById("edit-blog-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const title = document.getElementById("edit-title").value;
+        const body = document.getElementById("edit-body").value;
+        // const author = document.getElementById("edit-author").value;
 
-      await db.collection("blogs").doc(id).update({
-        title,
-        body,
-        // author,
+        await db.collection("blogs").doc(id).update({
+          title,
+          body,
+          // author,
+        });
+
+        window.location.reload(); // Refresh the page to show updated content
       });
 
-      window.location.reload(); // Refresh the page to show updated content
-    });
-
     // Handle delete button click
-    document.getElementById("delete-btn").addEventListener("click", async () => {
-      await db.collection("blogs").doc(id).delete();
-      window.location.href = "/index.html";
-    });
+    document
+      .getElementById("delete-btn")
+      .addEventListener("click", async () => {
+        await db.collection("blogs").doc(id).delete();
+        window.location.href = `${basePath}/index.html`; 
+      });
   };
 
   loadBlog();
