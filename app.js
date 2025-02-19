@@ -132,7 +132,7 @@ function loadCreatePage() {
     });
 
     // window.location.href = "/index.html";
-    window.location.href = `${basePath}/index.html`; 
+    window.location.href = `${basePath}/index.html`;
   });
 }
 
@@ -142,7 +142,7 @@ function loadShowPage() {
   const id = urlParams.get("id");
 
   if (!id) {
-    window.location.href = `${basePath}/index.html`;  // Redirect if no ID is provided
+    window.location.href = `${basePath}/index.html`; // Redirect if no ID is provided
     return;
   }
 
@@ -221,7 +221,7 @@ function loadShowPage() {
       .getElementById("delete-btn")
       .addEventListener("click", async () => {
         await db.collection("blogs").doc(id).delete();
-        window.location.href = `${basePath}/index.html`; 
+        window.location.href = `${basePath}/index.html`;
       });
   };
 
