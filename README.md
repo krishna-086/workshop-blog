@@ -27,7 +27,7 @@ To run this project locally:
     ```bash
     cd workshop-blog
     ```
-3.Add your Firebase configuration in `app.js`
+3. Add your Firebase configuration in `app.js`
 4. Open the `index.html` file in a browser or use a live server.
 
 ## Firebase Setup
